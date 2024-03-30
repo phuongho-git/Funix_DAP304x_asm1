@@ -36,24 +36,39 @@ with open("./Data/class2.txt","r") as readfile:
        row_count = len(exams)
        print("Total valid lines of data:", row_count)
 
-# Task 2.2: Xử lý chuỗi
+# Task 2.2: Báo cáo tổng số dòng không hợp lệ và không hợp lệ.
+       
+       valid_count = 0
        for rowno in range(row_count):
            exam = exams[rowno].strip()
            answer = exam.split(",")
            id = answer[0]
-           invalid_lines = []
 
-           # Task: 2.2: Báo cáo tổng số dòng không hợp lệ và in các dòng đó
+           # đếm các dòng có 26 giá trị và N# là mục đầu tiên, N# gồm ký tự N đầu tiên và 8 ký tự số phía sau.
+           if (len(answer) == 26 
+               & len(id) == 9 
+               & id[0] == "N" 
+               & id[1:10] == ["0","1", "2", "3","4","5","6","7","8","9"]):
 
-           if (len(answer)!=26):
-               print("\nInvalid line of data: does not contain exactly 26 values:\n", exam)
+               valid_count += 1
 
-           elif ( len(id) != 9 and id[0] != "N" and id[1:10] != ["0","1", "2", "3","4","5","6","7","8","9"]):
-               print("\nInvalid line of data: N# is invalid\n", exam)
+       print("\nTotal valid lines of data:", valid_count)
+       print("\nTotal invalid lines of data:", row_count - valid_count)
 
-           else:
-               print("\nTotal invalid lines of data: 0")
+# Task 3: In các dòng không hợp lệ ra báo cáo.
+       for rowno in range(row_count):
+           exam = exams[rowno].strip()
+           answer = exam.split(",")
+           id = answer[0]
 
+           # in các dòng không chứa 26 giá trị
+           if (len(answer) != 26):
+               print("\nInvalid line of data: does not contain exactly 26 values:\n", answer)
+
+           elif (len(id) != 9 
+               & id[0] != "N" 
+               & id[1:10] != ["0","1", "2", "3","4","5","6","7","8","9"]):
+               print("\nInvalid line of data: N# is invalid\n", answer)      
            
 
 
