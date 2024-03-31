@@ -21,22 +21,20 @@ else:
 
     print ("Sorry, I can't find this filename.") """
 
+# đáp án của bài thi
+answer_key = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D"
+right_answer = answer_key.split(",")
 
-
-
-
-# Task 2.1: Báo cáo tổng số dòng dữ liệu được lưu trữ trong tệp.
 
 with open("./Data/class2.txt","r") as readfile:
-   with open("task2.txt","a+") as task2:
-       exams = readfile.readlines()
-       row_count = len(exams)
-       print("Total valid lines of data:", row_count)
-
-
-# Task 2.2 và 2.3: Báo cáo tổng số dòng không hợp lệ và không hợp lệ. In các dòng không hợp lệ.
+   with open("task2.txt","w") as task2:
        
+
+
+       exams = readfile.readlines()
+       row_count = len(exams)      
        valid_lines = []
+
        for rowno in range(row_count):
            exam = exams[rowno].strip()
            answers = exam.split(",")
@@ -45,48 +43,45 @@ with open("./Data/class2.txt","r") as readfile:
 
            # in các dòng không chứa 26 giá trị
            if (len(answers) != 26):
-               print("\nInvalid line of data: does not contain exactly 26 values:\n", answers)
+               task2.write("\nInvalid line of data: does not contain exactly 26 values:\n")
+               task2.write(f"{answers}\n")
 
            # in các dòng có N# không hợp lê
            elif (len(id) != 9 
                or id[0] != "N"
                or id[1:10].isnumeric() == False):
                
-               print("\nInvalid line of data: N# is invalid\n", answers)
+               task2.write("\nInvalid line of data: N# is invalid\n")
+               task2.write(f"{answers}\n")
 
-           # tạo list chứa các dòng hợp lệ
-           else:              
-               valid_lines = valid_lines + [answers]                
+           # chấm điểm các dòng hợp lệ
+           else:             
+               valid_lines += [answers]
+               class_score = []
+               total_score = 0
+       print(valid_lines) 
+                                     
+            
 
-       print("\nTotal valid lines of data:", len(valid_lines))   # in tổng số các dòng hợp lệ
-       print("\nTotal invalid lines of data:", row_count - len(valid_lines))   #in tổng số các dòng không hợp lệ 
-
-
-# Task 3:
-       
-# đáp án
-answer_key = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D"
-right_answer = answer_key.split(",")
-
-# chấm điểm
-with open("./Data/task3.txt","w") as task3:           
-
-    score_list = []
-    for rowno in range(25):
-        
-        if valid_lines[i] == right_answer[i]:
-            score_list.append(4)
-
-        else:
-            score_list.append(-1)
                
-    print(right_answer[3])
 
 
+            
+                  
+                   
+                     
 
 
+       # in thông báo nếu các dòng đều hợp lệ
+       if len(valid_lines) == len(exams):
+          task2.write("\n\nNo errors found!")
 
-      
-           
+       # Ghi file task 2 report
+       task2.write("\n\n*** REPORT ***\n") 
+       task2.write("\nTotal lines of data:" + str(row_count))   # tổng số dòng
+       task2.write("\nTotal valid lines of data:" + str(len(valid_lines)))   # tổng số dòng hợp lệ
+       task2.write("\nTotal invalid lines of data:" + str(row_count - len(valid_lines)))   # tổng số dòng không hợp lệ
+       
 
+# ghi file chấm điểm từng học sinh 
 
