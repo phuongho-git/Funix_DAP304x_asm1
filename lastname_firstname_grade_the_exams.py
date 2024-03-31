@@ -35,7 +35,7 @@ def report(classFile):
             exams = readfile.readlines()
             row_count = len(exams)      
             valid_lines = []
-
+            score_lines = []
 
             with open("task4.txt","w") as task4:
 
@@ -47,7 +47,8 @@ def report(classFile):
 
                     # in các dòng không chứa 26 giá trị
                     if (len(answers) != 26):
-                        task2.write("\nInvalid line of data: does not contain exactly 26 values:\n")
+                        task2.write("\nInvalid line of data: \
+                                    does not contain exactly 26 values:\n")
                         task2.write(exam)
                         task2.write("\n")
 
@@ -76,16 +77,40 @@ def report(classFile):
                                 total_score += score                                
 
                             else:
-                                score = -1                         
+                                score = -1
+
+                        score_lines.append(total_score)                                                                                    
                                                                                                                         
                         # in kết quả của mỗi học sinh
                         task4.write(id + "," + str(total_score) + "\n")
 
-                        score_lines = np.array([id,total_score])
-                        print(score_lines)
-                        
-                        
+            
+            score_array = np.array(score_lines)
+            high_score = 0
+            size = score_array.size()            
+            
+            for i in range(size):
+                if int(score_array[i]) > 80:
+                    high_score += 1
+            print(high_score)
 
+            score_array.max()
+
+            score_array.min()
+
+            score_array.max() - score_array.min()
+
+            if len(score_array) % 2 == 0:
+                tv1 = (score_array[size/2 + 1] + score_array[size/2 - 1]) / 2
+            else:
+                tv2 = score_array[size/2]        
+
+
+            
+            
+
+            #score_max = score_array[0:25][1].max
+            #print(score_max) 
 
             # in thông báo nếu các dòng đều hợp lệ
             rows = len(valid_lines)
@@ -95,11 +120,14 @@ def report(classFile):
             # ghi file report
             task2.write("\n\n*** REPORT ***\n")
             # in tổng số dòng 
-            task2.write("\nTotal lines of data:" + str(row_count))
+            task2.write("\nTotal lines of data:" + \
+                        str(row_count))
             # tổng số dòng hợp lệ
-            task2.write("\nTotal valid lines of data:" + str(len(valid_lines)))
+            task2.write("\nTotal valid lines of data:" + \
+                        str(len(valid_lines)))
             # tổng số dòng không hợp lệ   
-            task2.write("\nTotal invalid lines of data:" + str(row_count - len(valid_lines)))   
+            task2.write("\nTotal invalid lines of data:" + \
+                        str(row_count - len(valid_lines)))   
 
                                                   
 
