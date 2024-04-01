@@ -34,7 +34,7 @@ def report(classFile):
 
             exams = readfile.readlines()
             row_count = len(exams)      
-            valid_lines = []
+            check_list = []
             score_lines = []
 
             with open("task4.txt","w") as task4:
@@ -62,59 +62,65 @@ def report(classFile):
                         task2.write("\n")
 
                     # tạo list các dòng hợp lệ
-                    else:             
-                        valid_lines += [answers]                                           
+                    else:                                                                              
                         total_score = 0
-                        answers.pop(0)                        
+                        answers.pop(0)
+                        check_answer = []                        
 
                         for answer in range(25):
                             if answers[answer] == right_answer[answer]:
                                 score = 4
-                                total_score += score                                
+                                total_score += score
+                                check_answer.append(4)                                
 
                             elif answers[answer] == "":
                                 score = 0
-                                total_score += score                                
+                                total_score += score
+                                check_answer.append(0)                                
 
                             else:
                                 score = -1
+                                check_answer.append(-1)
 
                         score_lines.append(total_score)                                                                                    
-                                                                                                                        
+                        check_list.append(check_answer)
+                        valid_rows = len(check_list)
+                                                                                                                  
                         # in kết quả của mỗi học sinh
                         task4.write(id + "," + str(total_score) + "\n")
 
-            
+            check_array = np.array(check_list)            
             score_array = np.array(score_lines)
-            high_score = 0
-            size = score_array.size()            
-            
-            for i in range(size):
+            scoresize = score_array.size
+
+            print(check_array)
+
+            high_score = 0                                 
+            for i in range(scoresize):
                 if int(score_array[i]) > 80:
                     high_score += 1
             print(high_score)
+
+            round(score_array.mean(),2)
 
             score_array.max()
 
             score_array.min()
 
-            score_array.max() - score_array.min()
+            score_array.max() - score_array.min()            
 
-            if len(score_array) % 2 == 0:
-                tv1 = (score_array[size/2 + 1] + score_array[size/2 - 1]) / 2
-            else:
-                tv2 = score_array[size/2]        
+            print(np.median(score_array))
 
+            null_count = np.count_nonzero(check_array == 0, axis=0)            
+            np.argwhere(null_count == null_count.max())
 
+            bad_count = np.count_nonzero(check_array == -1, axis=0)                  
+            np.argwhere(bad_count == bad_count.max())
+
+  
+            # in thông báo nếu các dòng đều hợp lệ           
             
-            
-
-            #score_max = score_array[0:25][1].max
-            #print(score_max) 
-
-            # in thông báo nếu các dòng đều hợp lệ
-            rows = len(valid_lines)
-            if rows == len(exams):
+            if valid_rows == len(exams):
                 task2.write("\n\nNo errors found!")
 
             # ghi file report
@@ -124,10 +130,10 @@ def report(classFile):
                         str(row_count))
             # tổng số dòng hợp lệ
             task2.write("\nTotal valid lines of data:" + \
-                        str(len(valid_lines)))
+                        str(valid_rows))
             # tổng số dòng không hợp lệ   
             task2.write("\nTotal invalid lines of data:" + \
-                        str(row_count - len(valid_lines)))   
+                        str(row_count - valid_rows))   
 
                                                   
 
