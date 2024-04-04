@@ -28,9 +28,9 @@ answer_key = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D"
 right_answer = answer_key.split(",")
 
 
-def report(classFile):
+def report(classFile,reportFile):
     with open(classFile,"r") as readfile:
-        with open("task2.txt","w") as task2:    
+        with open(reportFile,"a+") as writefile:    
 
             exams = readfile.readlines()
             row_count = len(exams)      
@@ -47,19 +47,18 @@ def report(classFile):
 
                     # in các dòng không chứa 26 giá trị
                     if (len(answers) != 26):
-                        task2.write("\nInvalid line of data: \
-                                    does not contain exactly 26 values:\n")
-                        task2.write(exam)
-                        task2.write("\n")
+                        writefile.write("\nInvalid line of data: does not contain exactly 26 values:\n")
+                        writefile.write(exam)
+                        writefile.write("\n")
 
                     # in các dòng có N# không hợp lê
                     elif (len(id) != 9 
                         or id[0] != "N"
                         or id[1:10].isnumeric() == False):
                
-                        task2.write("\nInvalid line of data: N# is invalid\n")
-                        task2.write(exam)
-                        task2.write("\n")
+                        writefile.write("\nInvalid line of data: N# is invalid\n")
+                        writefile.write(exam)
+                        writefile.write("\n")
 
                     # tạo list các dòng hợp lệ
                     else:                                                                              
@@ -84,58 +83,73 @@ def report(classFile):
 
                         score_lines.append(total_score)                                                                                    
                         check_list.append(check_answer)
-                        valid_rows = len(check_list)
-                                                                                                                  
-                        # in kết quả của mỗi học sinh
-                        task4.write(id + "," + str(total_score) + "\n")
 
+                        #in kết quả của mỗi học sinh
+                        task4.write(id + "," + str(total_score) + "\n")                 
+                                                                                                               
+            # tạo biến chứa điểm của mỗi câu hỏi
+            global check_array
+            global score_array
+            global valid_rows
             check_array = np.array(check_list)            
             score_array = np.array(score_lines)
-            scoresize = score_array.size
+            valid_rows = len(check_array)
 
-            print(check_array)
-
-            high_score = 0                                 
-            for i in range(scoresize):
-                if int(score_array[i]) > 80:
-                    high_score += 1
-            print(high_score)
-
-            round(score_array.mean(),2)
-
-            score_array.max()
-
-            score_array.min()
-
-            score_array.max() - score_array.min()            
-
-            print(np.median(score_array))
-
-            null_count = np.count_nonzero(check_array == 0, axis=0)            
-            np.argwhere(null_count == null_count.max())
-
-            bad_count = np.count_nonzero(check_array == -1, axis=0)                  
-            np.argwhere(bad_count == bad_count.max())
-
-  
-            # in thông báo nếu các dòng đều hợp lệ           
-            
-            if valid_rows == len(exams):
-                task2.write("\n\nNo errors found!")
+             
+            # in thông báo nếu các dòng đều hợp lệ                     
+            if valid_rows == row_count:
+                writefile.write("\n\nNo errors found!")
 
             # ghi file report
-            task2.write("\n\n*** REPORT ***\n")
+            writefile.write("\n\n*** REPORT ***\n")
             # in tổng số dòng 
-            task2.write("\nTotal lines of data:" + \
+            writefile.write("\nTotal lines of data:" + \
                         str(row_count))
             # tổng số dòng hợp lệ
-            task2.write("\nTotal valid lines of data:" + \
+            writefile.write("\nTotal valid lines of data:" + \
                         str(valid_rows))
             # tổng số dòng không hợp lệ   
-            task2.write("\nTotal invalid lines of data:" + \
-                        str(row_count - valid_rows))   
+            writefile.write("\nTotal invalid lines of data:" + \
+                        str(row_count - valid_rows))     
+                                                 
 
-                                                  
+classFile = "./Data/class5.txt"
+reportFile = "task2.txt"
+report(classFile,reportFile)
 
-classFile = "./Data/class2.txt"
-report(classFile)                                                    
+with open("task3.txt","+a") as task3:
+    classFile = "./Data/class5.txt"
+    reportFile = "task3.txt"
+    report(classFile,reportFile)
+
+    high_score = 0
+    for i in range(valid_rows):
+        if int(score_array[i] > 80):
+            high_score += 1
+    task3.write("\n\nNumber of students achieving high scores:" + \
+                str(high_score))
+    
+    task3.write("\nMean (average) score:" + str(round(score_array.mean(),2)))
+
+    task3.write("\nHighest score:" + str(score_array.max()))
+
+    task3.write("\nLowest score:" + str(score_array.min()))
+
+    task3.write("\nRange of scores:" + str(score_array.max() - score_array.min()))
+
+    task3.write("\nMedian score:" + str((np.median(score_array))*10/10))
+
+    null_count = np.count_nonzero(check_array == 0, axis = 0)
+    null_number = np.argwhere(null_count == null_count.max())
+
+    
+    task3.write("\nMost skipped answers to the question:" + str(null_number) + \
+                " - " + str(null_number.max()) + " skips - " + \
+                    str(round((null_number.max() / valid_rows),2) * 100) + "%")
+
+    bad_count = np.count_nonzero(check_array == -1, axis=0)
+    bad_number = np.argwhere(bad_count == bad_count.max())
+    task3.write("\nMost incorrect answers to the question:" + str(bad_number) + \
+                " - " + str(bad_number.max()) + " wrong turns - " + \
+                    str(round((bad_number.max() / valid_rows),2) * 100) + "%")
+          

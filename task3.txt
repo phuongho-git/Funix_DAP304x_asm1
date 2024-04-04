@@ -1,0 +1,19 @@
+
+
+No errors found!
+
+*** REPORT ***
+
+Total lines of data:1000
+Total valid lines of data:1000
+Total invalid lines of data:0
+
+Number of students achieving high scores:357
+Mean (average) score:78.44
+Highest score:100
+Lowest score:48
+Range of scores:52
+Median score:80.0
+Most skipped answers to the question:[[ 5]
+ [22]] - 22 skips - 2.0%
+Most incorrect answers to the question:[[11]] - 11 wrong turns - 1.0%
