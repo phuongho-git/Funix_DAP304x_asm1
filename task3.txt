@@ -1,4 +1,31 @@
 
+Invalid line of data: does not contain exactly 26 values:
+N00000023,,A,D,D,C,B,D,A,C,C,,C,,B,A,C,B,D,A,C,A,A
+
+Invalid line of data: N# is invalid
+N0000002,B,A,D,D,C,B,D,A,C,D,D,D,A,,A,C,D,,A,C,A,A,B,D,D
+
+Invalid line of data: N# is invalid
+NA0000027,B,A,D,D,,B,,A,C,B,D,B,A,,A,C,B,D,A,,A,A,B,D,D
+
+Invalid line of data: does not contain exactly 26 values:
+N00000035,B,A,D,D,B,B,,A,C,,D,B,A,B,A,A,B,D,A,C,A,C,B,D,D,A,A
+
+
+*** REPORT ***
+
+Total lines of data:25
+Total valid lines of data:21
+Total invalid lines of data:4
+
+Number of students achieving high scores: 7
+Mean (average) score: 80.76
+Highest score: 100
+Lowest score: 72
+Range of scores: 28
+Median score: 80.0
+Most skipped answers to the question: [21] - 6 skips - 28.57%
+Most incorrect answers to the question: [17] - 5 wrong turns - 23.81%
 
 No errors found!
 
@@ -8,12 +35,28 @@ Total lines of data:1000
 Total valid lines of data:1000
 Total invalid lines of data:0
 
-Number of students achieving high scores:357
-Mean (average) score:78.44
-Highest score:100
-Lowest score:48
-Range of scores:52
-Median score:80.0
-Most skipped answers to the question:[[ 5]
- [22]] - 22 skips - 2.0%
-Most incorrect answers to the question:[[11]] - 11 wrong turns - 1.0%
+Number of students achieving high scores: 357
+Mean (average) score: 78.44
+Highest score: 100
+Lowest score: 48
+Range of scores: 52
+Median score: 80.0
+Most skipped answers to the question: [ 5 22] - 117 skips - 11.7%
+Most incorrect answers to the question: [11] - 130 wrong turns - 13.0%
+
+No errors found!
+
+*** REPORT ***
+
+Total lines of data:49
+Total valid lines of data:49
+Total invalid lines of data:0
+
+Number of students achieving high scores : 18
+Mean (average) score: 79.35
+Highest score: 92
+Lowest score: 64
+Range of scores: 28
+Median score: 80.0
+Most skipped answers to the question: [3] - 9 skips - 18.37%
+Most incorrect answers to the question: [ 3 14] - 9 wrong turns - 18.37%
