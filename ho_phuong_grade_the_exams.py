@@ -7,10 +7,14 @@ import numpy as np
 answer_key = "B,A,D,D,C,B,D,A,C,C,D,B,A,B,A,C,B,D,A,C,A,A,B,D,D"
 right_answer = answer_key.split(",")
 
-# hàm xác định các dòng hợp lệ và tính điểm từng câu trả lời
-def report(classFile,reportFile):
+# function xác định các dòng hợp lệ và tính điểm từng câu trả lời
+def report(classFile,reportFile,name):
     with open(classFile,"r") as readfile:
-        with open(reportFile,"a+") as writefile:    
+        with open(reportFile,"a+") as writefile:
+
+            writefile.write("Enter a class to grade (i.e. class1 for class1.txt): " + name)
+            writefile.write("\nSuccessfully opened " + name + ".txt")
+            writefile.write("\n\n*** ANALYZING ***\n")    
 
             readfile.seek(0)
             exams = readfile.readlines()
@@ -39,7 +43,7 @@ def report(classFile,reportFile):
                     writefile.write("\n")
 
                 # tính điểm từng câu trả lời cho các dòng hợp lệ
-                else:                                                                             
+                else:
                     total_score = 0 # biến tính tổng điểm cho từng học sinh
                     answers.pop(0) # bỏ id học sinh
                     # list trống sẽ chứa điểm cho câu trả lời của từng học sinh
@@ -58,34 +62,42 @@ def report(classFile,reportFile):
 
                         else:
                             score = -1
+                            total_score += score
                             check_answer.append(-1)
 
                     score_lines.append(total_score)                                                                                    
                     check_list.append(check_answer)              
                                                                                                                
-            # tạo biến chứa điểm của mỗi câu hỏi và tổng điểm của từng học sinh
+            # tạo biến toàn cục chứa điểm của mỗi câu hỏi và tổng điểm của từng học sinh
             global check_array
             global score_array
             global valid_rows
             check_array = np.array(check_list)            
             score_array = np.array(score_lines)
             valid_rows = len(check_array)
-             
-            # in thông báo nếu các dòng đều hợp lệ                     
-            if valid_rows == row_count:
-                writefile.write("\n\nNo errors found!")
 
-            # ghi file report
-            writefile.write("\n\n*** REPORT ***\n")
-            # in tổng số dòng 
+            # ghi thông báo nếu các dòng đều hợp lệ                     
+            if valid_rows == row_count:
+                writefile.write("\nNo errors found!\n")
+
+            writefile.write("\n*** REPORT ***\n")
+            # ghi tổng số dòng 
             writefile.write("\nTotal lines of data:" + \
                             str(row_count))
-            # tổng số dòng hợp lệ
+            # ghi tổng số dòng hợp lệ
             writefile.write("\nTotal valid lines of data:" + \
                             str(valid_rows))
-            # tổng số dòng không hợp lệ   
+            # ghi tổng số dòng không hợp lệ   
             writefile.write("\nTotal invalid lines of data:" + \
-                            str(row_count - valid_rows))            
+                            str(row_count - valid_rows) + "\n") 
+
+def checkfile(taskFile):
+    # check file có tồn tại không
+    if os.path.isfile(taskFile) == 1:
+    # nếu file tồn tại thì viết thông báo restart
+        with open(taskFile, "a+") as writefile:
+            writefile.writelines("\n\n>>> ================================ RESTART " + \
+                                 "================================\n" + ">>>\n")         
    
                                                  
 # lấy đường dẫn của folder người dùng
@@ -93,32 +105,46 @@ current_path = os.getcwd()
 # lấy đường dẫn của folder Data chứa file cần phân tích
 datapath = os.path.join(current_path, "Data")
 # nhập tên file từ người dùng
-filename = input("Enter a class to grade (i.e. class1 for class1.txt): ")
+name = input("Enter a class to grade (i.e. class1 for class1.txt): ")
+filename = name + ".txt"
 # lấy tên file cần phân tích trong folder Data
 filepath = os.path.join(datapath,filename)
-# gán biến cho function report
-classFile = filepath
-reportFile = "task2.txt"
 
 # chạy code nếu không có ngoại lệ
 try:
+    # check file task 2 có tồn tại không
+    taskFile ="task2.txt"
+    checkfile(taskFile)
+
+    # gán biến cho function report
+    classFile = filepath
+    reportFile = "task2.txt"
+
     # task 2: ghi file thông báo tổng số dòng, số dòng hợp lệ, không hợp lệ
-    # ghi các dòng không hợp lệ
-    report(classFile,reportFile)
+    # ghi chi tiết giá trị của các dòng không hợp lệ
+    report(classFile,reportFile,name)
+
+    # hiện thông báo mở file thành công ra màn hình
+    print("Successfully opened " + filename)
+    print("Analyzing...")
+
+    # check file task 3 có tồn tại không
+    taskFile = "task3.txt"
+    checkfile(taskFile)
 
     # task 3: ghi file khác chứa các thông báo như task 2 và tính các giá trị thống kê
     with open(classFile, "r") as readfile:
         with open("task3.txt", "a+") as writefile:
 
             # ghi lại các thông báo như task 2
-            report(classFile,"task3.txt")
+            report(classFile,"task3.txt",name)
 
             # thống kê số học sinh đạt điểm cao (> 80)
             high_score = 0
             for i in range(valid_rows):
                 if int(score_array[i]) > 80:
                     high_score += 1
-            writefile.write("\n\nNumber of students achieving high scores : " + \
+            writefile.write("\nNumber of students achieving high scores : " + \
                             str(high_score))
     
             # thống kê điểm trung bình của học sinh trong lớp
@@ -134,7 +160,7 @@ try:
             writefile.write("\nRange of scores: " + str(score_array.max() - score_array.min()))
 
             # thống kê giá trị trung vị của điểm trong lớp
-            writefile.write("\nMedian score: " + str((np.median(score_array))*10/10))
+            writefile.write("\nMedian score: " + str(round(np.median(score_array))))
 
 
             # thống kê các câu hỏi bị bỏ qua nhiều nhất
@@ -162,11 +188,10 @@ try:
             writefile.write("\nMost incorrect answers to the question: " + \
                             str(bad_number[:,0]) + " - " + \
                             str(bad_count.max()) + " wrong turns - " + \
-                            str(bad_ratio) + "%")
+                            str(bad_ratio) + "%\n")
                             
 
     # task 4: tạo một tệp “kết quả” chứa tổng điểm cho từng học sinh
-    name = filename.split(".")[0]
     with open(classFile, "r") as readfile:
         with open(f"{name}_grades.txt", "w") as writefile:
             readfile.seek(0)
@@ -187,13 +212,15 @@ try:
             # ghi file tính điểm cho từng học sinh trong lớp
             for line in range(valid_rows):
                 student_score = valid_id[line] + "," + str(score_array[line])
-                writefile.writelines(student_score + "\n")          
-                
-except OSError:
-    print("File not found.")
+                writefile.writelines(student_score + "\n")
+
+    print("Successfully created " + f"{name}_grades.txt")
 
 except (KeyboardInterrupt, EOFError):
     print("Keyboard interrupt!")
 
+except OSError:
+    print("File not found.")
+
 except Exception:
-    print("Something went wrong!")   
+    print("Something went wrong!")
