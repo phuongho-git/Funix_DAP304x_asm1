@@ -18,8 +18,12 @@ def report(classFile,reportFile,name):
                         "\n\n*** ANALYZING ***\n")
             readfile.seek(0)
             exams = [line.rstrip('\n') for line in readfile]
-            exam = np.array([line.split(",") for line in exams])                        
-            
+            exam = [line.split(",") for line in exams]
+            for i, answer in enumerate(exam):
+                if (len(answer) != 26):
+                    writefile.writelines(
+                        f"\nInvalid line of data: does not contain exactly 26 values:\n{exams[i]}\n")
+
 current_path = os.getcwd()
 datapath = os.path.join(current_path, "Data")
 name = input("Enter a class to grade (i.e. class1 for class1.txt): ")
@@ -37,6 +41,5 @@ except (KeyboardInterrupt, EOFError):
 except OSError:
     print("File not found.")
 
-except Exception:
-    print("Something went wrong!")
+
     
