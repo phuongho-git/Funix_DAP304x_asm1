@@ -17,9 +17,9 @@ def report(classFile,reportFile,name):
                     "\nSuccessfully opened " + name + ".txt" + \
                         "\n\n*** ANALYZING ***\n")
             readfile.seek(0)
-            exams = np.array([line.rstrip('\n') for line in readfile])
-            print(exams)
-
+            exams = [line.rstrip('\n') for line in readfile]
+            exam = np.array([line.split(",") for line in exams])                        
+            
 current_path = os.getcwd()
 datapath = os.path.join(current_path, "Data")
 name = input("Enter a class to grade (i.e. class1 for class1.txt): ")
