@@ -40,8 +40,22 @@ def report(classFile,reportFile,name):
                         else:
                             answer[i+1] = -1
                     score_list.append(answer)
-            score_array = np.array(score_list,np.newaxis)
-    return score_array     
+    return np.array(score_list)
+
+def score_count(classFile,reportFile,name):
+    score_N = report(classFile,reportFile,name)
+    score_array = (np.array(score_N,np.newaxis)[:, 1:26]).astype(int)
+    student_score = np.sum(score_array, axis = 1)
+    with open(f"{name}_grades.txt", "w") as writefile:
+        for i in range(len(score_N)):
+            writefile.write(f"{score_N[i,0]},{student_score[i]}\n")
+    return score_array
+
+def report_analysis(classFile,reportFile,name):
+    score_list = report(classFile,reportFile,name)
+    score_array = (np.array(score_list,np.newaxis)[:, 1:26]).astype(int)
+    student_score = np.sum(score_array, axis = 1)
+    
 
 current_path = os.getcwd()
 datapath = os.path.join(current_path, "Data")
@@ -53,6 +67,13 @@ try:
     reportFile = "task2.txt"
     classFile = filepath
     report(classFile,reportFile,name)
+    
+    reportFile = "task3.txt"
+    report(classFile,reportFile,name)
+    report_analysis(classFile,reportFile,name)
+    
+    reportFile = f"{name}_grades.txt"
+    score_count(classFile,reportFile,name)
     
 except (KeyboardInterrupt, EOFError):
     print("Keyboard interrupt!")
