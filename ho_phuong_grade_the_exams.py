@@ -14,10 +14,10 @@ def checkfile(reportFile):
                                  "===========================\n" + ">>>\n")
 
 # task 2: function xác định các dòng không hợp lệ và tính điểm từng câu trả lời
-def report(classFile,task2File,name):
-    checkfile(task2File)
+def report(classFile,reportFile,name):
+    checkfile(reportFile)
     with open(classFile, "r") as readfile:
-        with open(task2File, "a+") as writefile:
+        with open(reportFile, "a+") as writefile:
             writefile.writelines(
                 "Enter a class to grade (i.e. class1 for class1.txt): " + name + \
                     "\nSuccessfully opened " + name + ".txt" + \
@@ -64,8 +64,8 @@ def report(classFile,task2File,name):
     return np.array(score_list) # trả về mảng numpy chứa điểm của mỗi câu trả lời cho từng học sinh
 
 # task 4: function ghi tổng số điểm của từng học sinh
-def score_count(classFile,task4File,name):
-    score_N = report(classFile,task4File,name) # chạy function lấy mảng chứa điểm của mỗi câu trả lời
+def score_count(classFile,analysisFile,name):
+    score_N = report(classFile,analysisFile,name) # chạy function lấy mảng chứa điểm của mỗi câu trả lời
     score_array = (np.array(score_N,np.newaxis)[:, 1:26]).astype(int) # bỏ N# chỉ lấy điểm số
     student_score = np.sum(score_array, axis = 1) # tính tổng điểm của từng học sinh
     
@@ -76,11 +76,11 @@ def score_count(classFile,task4File,name):
     return score_array # trả về mảng numpy bỏ N# chỉ chứa điểm của từng học sinh
 
 # task 3: function tính các giá trị thống kê của điểm số các học sinh trong lớp
-def report_analysis(classFile,task3File,name):
-    score_array = score_count(classFile,task3File,name) # lấy mảng numpy bỏ N# chỉ chứa điểm
+def report_analysis(classFile,analysisFile,name):
+    score_array = score_count(classFile,analysisFile,name) # lấy mảng numpy bỏ N# chỉ chứa điểm
     student_score = np.sum(score_array, axis = 1) # tính tổng điểm của từng học sinh 
     
-    with open(task3File, "a+") as writefile:
+    with open(analysisFile, "a+") as writefile:
         
         # thống kê số học sinh đạt điểm cao (> 80)
         writefile.write(f"\nNumber of students achieving high scores: {sum(student_score > 80)}")
@@ -151,17 +151,17 @@ filepath = os.path.join(datapath,filename)
 # chạy code nếu không có ngoại lệ
 try:
     # gán biến và chạy function task 2
-    task2File = "task2.txt"
+    reportFile = "task2.txt"
     classFile = filepath
-    report(classFile,task2File,name)
+    report(classFile,reportFile,name)
     
     # hiện thông báo mở file thành công ra màn hình
     print("Successfully opened " + filename)
     print("Analyzing...")
     
-    # gán biến và chạy function task 4
-    task3File = "task3.txt"
-    report_analysis(classFile,task3File,name)
+    # gán biến và chạy function task 3
+    analysisFile = "task3.txt"
+    report_analysis(classFile,analysisFile,name)
 
     # hiện thông báo tạo file tính điểm từng học sinh
     print(f"Successfully created {name}_grades.txt")
