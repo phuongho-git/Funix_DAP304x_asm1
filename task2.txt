@@ -1,0 +1,124 @@
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class4
+Successfully opened class4.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class8
+Successfully opened class8.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class1
+Successfully opened class1.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
+
+
+>>> =========================== RESTART ===========================
+>>>
+Enter a class to grade (i.e. class1 for class1.txt): class2
+Successfully opened class2.txt
+
+*** ANALYZING ***
