@@ -17,16 +17,7 @@ def checkfile(reportFile):
 # task 2: function xác định các dòng không hợp lệ và tính điểm từng câu trả lời
 def report(classFile,reportFile,name):
     checkfile(reportFile)
-    with open(classFile, "r") as readfile:
-        with open(reportFile, "a+") as writefile:
-            writefile.writelines(
-                "Enter a class to grade (i.e. class1 for class1.txt): " + name + \
-                    "\nSuccessfully opened " + name + ".txt" + \
-                        "\n\n*** ANALYZING ***\n")
-            readfile.seek(0)
-            exams = [line.rstrip('\n') for line in readfile] # cắt từng dòng
-            exam =  pd.DataFrame([line.split(",") for line in exams])
-            print(exam)
+
             
 
 # lấy đường dẫn của folder người dùng
