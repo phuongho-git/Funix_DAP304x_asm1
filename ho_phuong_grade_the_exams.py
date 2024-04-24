@@ -1,5 +1,6 @@
 
 import os
+import csv
 import numpy as np
 import pandas as pd
 
@@ -17,8 +18,49 @@ def checkfile(reportFile):
 # task 2: function xác định các dòng không hợp lệ và tính điểm từng câu trả lời
 def report(classFile,reportFile,name):
     checkfile(reportFile)
-
+    # task 2: function xác định các dòng không hợp lệ và tính điểm từng câu trả lời
+def report(classFile,reportFile,name):
+    checkfile(reportFile)
+    with open(classFile, "r") as readfile:
+        with open(reportFile, "a+") as writefile:
+            writefile.writelines(
+                "Enter a class to grade (i.e. class1 for class1.txt): " + name + \
+                    "\nSuccessfully opened " + name + ".txt" + \
+                        "\n\n*** ANALYZING ***\n")
+            readfile.seek(0)
+            exams = [line.rstrip('\n') for line in readfile] # cắt từng dòng
+            exam = [line.split(",") for line in exams] # tách riêng thành phần trong dòng
+            score_list = [] # list trống để chứa tổng điểm của bài thi
             
+            for rowno, answer in enumerate(exam):
+                # in các dòng không chứa 26 giá trị
+                if (len(answer) != 26):
+                    writefile.writelines(
+                        f"\nInvalid line of data: does not contain exactly 26 values:\n{exams[rowno]}\n")
+                    
+                # in các dòng có N# không hợp lê
+                elif (len(answer[0]) != 9) or (answer[0][0] != "N") \
+                    or ((answer[0][1:10]).isnumeric() == False):
+                    writefile.writelines(f"\nInvalid line of data: N# is invalid\n{exams[rowno]}\n")
+                    
+                else:
+                    score_list.append(answer)
+            
+            # ghi thông báo nếu các dòng đều hợp lê
+            if len(score_list) == len(exams):
+                writefile.write("\nNo errors found!\n")
+                
+            writefile.write("\n*** REPORT ***\n")
+            # ghi tổng số dòng 
+            writefile.write(f"\nTotal lines of data: {len(exams)}")
+            # ghi tổng số dòng hợp lệ
+            writefile.write(f"\nTotal valid lines of data: {len(score_list)}")
+            # ghi tổng số dòng không hợp lệ   
+            writefile.write(f"\nTotal invalid lines of data: {len(exams)-len(score_list)}")
+        
+    # trả về dataframe chứa điểm của mỗi câu trả lời cho từng học sinh
+    return pd.DataFrame(score_list).set_index(0)
+   
 
 # lấy đường dẫn của folder người dùng
 current_path = os.getcwd()
